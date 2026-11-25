@@ -45,7 +45,7 @@
       const li = document.createElement('li');
       li.className = 'card';
       li.dataset.test = `product-${product.id}`;
-      li.innerHTML = '<h2></h2><p class="price" data-test="price"></p><button type="button">Add to cart</button>';
+      li.innerHTML = '<h2></h2><p class="price" data-test="price"></p><button type="button">Add to basket</button>';
       li.querySelector('h2').textContent = product.name;
       li.querySelector('.price').textContent = product.price;
       li.querySelector('button').addEventListener('click', async () => {
