@@ -1,22 +1,15 @@
-# Test status — <product>, <date>
+# Test status — Toolshop, 26 Nov 2026
 
 Five lines a busy person can read on a phone. The verdict first; detail only if they ask.
 
-**Verdict:** <Ready / Ready with known risks / Not ready> — <one reason>
+**Verdict:** Not ready — any authenticated customer can read another customer's order via GET /api/orders/:orderId (Broken Access Control / IDOR).
 
-**What ran:** <which suites, which browsers, how many tests, pass / fail / flaky>
+**What ran:** Playwright suite across chromium, firefox, webkit, and mobile (Pixel 7) in the nightly run, perf/load.mjs search load tests (1, 5, 10, 25, and 50 users), and order-privacy exploration test on chromium (1 failed, 0 flaky).
 
-**New problems:** <bug, severity, one line each — most severe first>
+**New problems:**
+- Broken Access Control on GET /api/orders/:orderId returns 200 instead of 404 with sequential order IDs, exposing other customers' order details (Critical)
+- Search p95 crosses the 200 ms budget around 5 users (p95 = 223 ms) while throughput levels off around 34–35 req/s, alongside mobile layout and accessibility issues on the 412px screen (High)
 
-**Not tested:** <what you did not cover, and the risk that leaves>
+**Not tested:** Real physical mobile devices and deeper security/payment edge cases, leaving real-device behavior and unverified edge flows unconfirmed.
 
-**Decision needed:** <what you need from whom, and by when — or "none">
-
----
-
-Rules of thumb
-- Lead with the verdict, not with the effort. "We ran 96 tests" is not news; "not ready, because
-  any customer can read any order" is.
-- Numbers need a comparison. "3 flaky" means little; "3 flaky, up from 0 last week" means a lot.
-- Say what you did not test. Silence reads as "covered".
-- No blame. A bug is a fact about the product, not about a person.
+**Decision needed:** Approve holding the release until the order access-control bug is fixed (and align on mobile/performance fixes), from the Tech Lead / Product Owner before release sign-off.
