@@ -43,7 +43,7 @@ export class ShopPage {
 
   /** The Add to cart button on one product's card. The only place in the suite that knows its text. */
   addToCartButton(name: string): Locator {
-    return this.product(name).getByRole('button', { name: 'Add to cart' });
+    return this.product(name).getByRole('button', { name: 'Add to basket' });
   }
 
   /**
